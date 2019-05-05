@@ -1,0 +1,99 @@
+{% extends "index.html" %}
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('static/img/logo.png')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    {% block main %}
+
+<div class="form-inline">
+  <div class="form-group col-lg-12">
+
+        <!-- <select name="Topic" method="POST" size="5">
+          <option value="vaccine">Vaccines</option>
+          <option value="abortion">Abortion</option>
+          <option value="marijuana">Marijuana</option>
+          <option value="aids">AIDS/HIV</option>
+          <option value="ecig">E-cigarettes</option>
+        </select> -->
+        <div class="" style="width:100%; height:100px; text-align:center; font-size:24px; font-weight:bold;">
+          <p style="margin-top:25px;">Analysis Topic</p>
+        </div>
+        <!-- <select>
+          <option value="latest">Latest Tweets</option>
+          <option value="top_words">Top Words</option>
+          <option value="top_hash">Top Hashtags</option>
+          <option value="top_tweets">Top Tweets</option>
+          <option value="sentiment">Sentiment</option>
+        </select> -->
+        {% if search_topic %}
+          <div class="" style="width:100%; height:100px; text-align:center; font-size:24px; font-weight:bold;">
+            <p style="margin-top:25px;">Search result for {{search_topic}} topic:</p>
+          </div>
+        {% endif %}
+
+        {% if result_list %}
+        <div class="" style="width:404px; height:255px; border:2px solid black; padding:0px; display:block; margin:10px auto 30px;">
+          <div class="" style="width:100%; height:24px; border-bottom:2px solid black; padding:0px;">
+            <p style="text-align:center; font-size:18px; line-height:24px; margin:0px;">topic polarity</p>
+          </div>
+          <div id="chartContainer" style="height: 225px; width: 390px;"></div>
+        </div>
+        {% endif %}
+
+        <div class="" style="width:100%; height:100px; text-align:center;">
+          <form action="{{url_for('dash')}}" method="POST" style="position:relative;">
+            <div class="" style="width:200px; height:70px; margin:0 auto;">
+              <select name="topic" style="margin:0 auto;">
+                <option value="vaccine">vaccine</option>
+                <option value="abortion">abortion</option>
+                <option value="weed">weed</option>
+                <option value="aids">aids</option>
+                <option value="ecig">ecig</option>
+              </select>
+            </div>
+            <div class="" style="width:200px; height:100px; margin:0 auto;">
+              <input type="submit" value="Analyze" style="border:0px; width:auto; background:#0085a1; padding:10px 64px; color:#ffffff;">
+            </div>
+          </form>
+        </div>
+
+        <!-- <p>{{ search_topic }}</p>
+        <p>positive: {{ positive }}</p>
+        <p>negative: {{ negative }}</p>
+        <p>neutral: {{ neutral }}</p> -->
+        <!-- <div class='container'>
+            <form action="/analyze">
+                <a href=# id=analyze><button class='btn btn-default' style="display:inline;margin-left:600px;margin-top:-150px">Analyze</button></a>
+            </form>
+        </div> -->
+
+</div>
+     </div>
+  </div>
+
+
+    </div>
+
+
+    {% endblock %}
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{{url_for('static', filename = 'js/clean-blog.min.js')}}"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  </body>
+
+</html>

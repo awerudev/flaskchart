@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>The TweetChecker</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename = 'vendor/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{{url_for('static', filename = 'vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename = 'css/clean-blog.min.css')}}" rel="stylesheet">
+    <style media="screen">
+      .canvasjs-chart-credit{
+        display:none !important;
+      }
+
+      .highcharts-button-symbol{
+        display:none !important;
+      }
+
+      ..highcharts-button-symbol:hover{
+        display:none !important;
+      }
+      .highcharts-credits{
+        display:none !important;
+      }
+      .highcharts-button-box{
+        display:none !important;
+      }
+    </style>
+    <script>
+    window.onload = function () {
+
+    // polarity chart js
+    var polarity_chart = new CanvasJS.Chart("chartContainer", {
+    	animationEnabled: true,
+    	title:{
+    		text: "",
+    		horizontalAlign: "center"
+    	},
+    	data: [{
+    		type: "doughnut",
+    		startAngle: 60,
+    		// innerRadius: 60,
+    		indexLabelFontSize: 12,
+    		indexLabel: "{label} - #percent%",
+    		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+    		dataPoints: [
+    			{ y: {{positive}}, label: "Positive" },
+    			{ y: {{negative}}, label: "Negative" },
+    			{ y: {{neutral}}, label: "Neutral" }
+    		]
+    	}]
+    });
+    polarity_chart.render();
+
+
+    // Url support chart js
+    var url_chart = new CanvasJS.Chart("urlsupport", {
+    	animationEnabled: true,
+    	title:{
+    		text: "",
+    		horizontalAlign: "center"
+    	},
+    	data: [{
+    		type: "doughnut",
+    		startAngle: 60,
+    		// innerRadius: 60,
+    		indexLabelFontSize: 12,
+    		indexLabel: "{label} - #percent%",
+    		toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+    		dataPoints: [
+    			{ y: {{url_supported_link}}, label: "URL" },
+    			{ y: {{url_non_supported_link}}, label: "No URL" }
+    		]
+    	}]
+    });
+    url_chart.render()
+
+
+    // time series line chart js
+    var time_series_line_chart = new CanvasJS.Chart("timechart", {
+    	title:{
+    		text: ""
+    	},
+    	toolTip: {
+    		shared: true
+    	},
+    	data: [{
+    		type: "line",
+    		name: "{{search_topic}}",
+    		color: "#369EAD",
+    		showInLegend: true,
+    		axisYIndex: 1,
+    		dataPoints: [
+    			{ x: new Date(2019, 03, 17), y: 0 },
+    			{ x: new Date(2019, 03, 18), y: 0 },
+    			{ x: new Date(2019, 03, 19), y: 0 },
+          { x: new Date(2019, 03, 20), y: 0 },
+    			{ x: new Date(2019, 03, 21), y: {{day_first}} },
+    			{ x: new Date(2019, 03, 22), y: {{day_second}} },
+    			{ x: new Date(2019, 03, 23), y: 0 },
+    			{ x: new Date(2019, 03, 24), y: 0 },
+    			{ x: new Date(2019, 03, 25), y: 0 },
+    			{ x: new Date(2019, 03, 26), y: 0 },
+    			{ x: new Date(2019, 03, 27), y: 0 }
+    		]
+    	}
+    	]
+    });
+    time_series_line_chart.render();
+
+
+
+    // polarity & support chart js
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: ['Negative', 'Neutral', 'Positive']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                }
+            }
+        },
+        series: [{
+            name: 'No URL',
+            data: [{{negative_with_out_url}}, {{neutral_with_out_url}}, {{positive_with_out_url}}]
+        }, {
+            name: 'URL',
+            data: [{{negative_with_url}}, {{neutral_with_url}}, {{positive_with_url}}]
+        }]
+    });
+
+
+
+    // Used Domain chart js
+    Highcharts.chart('used_domain_chart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: ''
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '10px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ''
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Used Domains: <b>{point.y:.1f}</b>'
+        },
+        series: [{
+            name: 'Population',
+            data: [
+                ['Domain_1', 140],
+                ['Domain_2', 138],
+                ['Domain_3', 122],
+                ['Domain_4', 127],
+                ['Domain_5', 113],
+                ['Domain_6', 137],
+                ['Domain_7', 117],
+                ['Domain_8', 123],
+                ['Domain_9', 128],
+                ['Domain_10', 138]
+            ],
+            dataLabels: {
+                enabled: true,
+                rotation: 0,
+                color: '#000000',
+                align: 'center',
+                format: '{point.y:.1f}', // one decimal
+                y: -20, // 10 pixels down from the top
+                style: {
+                    fontSize: '10px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+
+    }
+    </script>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"></a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="{{url_for('about')}}">About</a>
+              <a href="{{url_for('dash')}}">Dashboard</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('static/img/logo.png')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {% block main %}  {% endblock %}
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+
+    {% if result_list %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+              var offset = $("#jq_get_id").offset();
+              var top_offset = offset.top
+              $('html,body').animate({scrollTop: top_offset }, 2000);
+            });
+      </script>
+    {% endif %}
+
+    <!-- Custom scripts for this template -->
+    <script src="{{url_for('static', filename = 'js/clean-blog.min.js')}}"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+  </body>
+
+</html>

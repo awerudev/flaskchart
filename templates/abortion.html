@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+
+{% block main %}
+<!-- Main Content -->
+    <div class="container">
+        <div class="row">
+
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <h2 class="post-title">
+                            Data and Charts
+                        </h2>
+                        <div id="chart_div"></div>
+
+
+                <hr>
+                    {% for chart in charts %}
+                      {{chart | safe}}
+                    {% endfor %}
+                <hr>
+                <br/><br/> 
+                
+                <small><em> Last updated: {{datetime_toptweets}} GMT</em></small>
+
+
+            </div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <h2 class="post-title">
+                            Most Recent Tweets about abortion
+                        </h2>
+                        <p class="post-subtitle">
+                           This is a view of the 15 most recent tweets mentioning abortion
+                        </p>
+
+                        <div id="chart_div"></div>
+
+
+                <hr>
+                    {% for tweet in tweets %}
+                      {{tweet | safe}}
+                    {% endfor %}
+                <hr>
+                <br/><br/> 
+                
+                <small><em> Last updated: {{datetime_toptweets}} GMT</em></small>
+
+
+                    
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}    
