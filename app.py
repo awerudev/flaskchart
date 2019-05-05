@@ -6,10 +6,10 @@ import csv
 # import plots,copy,random,string
 # access_key_id = 'ASIA37PBWIRNEDGEMZO2'
 # secret_access_key = "+QT0v4mCGOxm7"
-# session_token = '+dP/EIgDIcZgOUcuzlLHRY9glf+sqJexnhFY6I6s5Vjv6AtT66gUKo4t3PkdkTGtYr/SYI6CBvnEYPOtumiuqdCgHJZLUrYjZx0AsENG9BMgodHcFk8u/cSppfhzjYwWbGKzyBuNiWvpQrpNwVrpO+O+J3ORApG0/jnIv8ibN8oxqLa4QU='
+# session_token = '+dP/EIgDIcZgOUcuzlLHRY9glf+/SYI6CBvnEYPOtumiuqdCgHJZLUrYjZx0AsENG9BMgodHcFk8u/cSppfhzjYwWbGKzyBuNiWvpQrpNwVrpO+O+J3ORApG0/jnIv8ibN8oxqLa4QU='
 #
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = '0f9dc56d2288afa6e10b8d97577fe25b'
+# app.config['SECRET_KEY'] = '0f9dc56d2288afa6e1'
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 #
 #
@@ -26,7 +26,7 @@ app = Flask(__name__)
 #
 region = 'us-east-2'
 # session = boto3.session.Session()
-aws_secret = 'aXL3ndaT/BilMryekSWpQ78BYsnstGgTFfW3ObrV'
+aws_secret = 'aXL3ndaT/BilMryekS'
 aws_pub = 'AKIAIFL3OJZQZDFSJOQQ'
 db = boto3.resource('dynamodb',aws_access_key_id=aws_pub,aws_secret_access_key=aws_secret, region_name=region)
 # img_folder = '/home/trevorm4/mysite/static/img/'
